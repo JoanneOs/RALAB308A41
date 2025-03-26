@@ -235,6 +235,39 @@ export async function favourite(imgId) {
  *    repeat yourself in this section.
  */
 
+async function getFavourites() {
+ try {
+   Carousel.clear();
+   infoDump.innerHTML = "Loading favorites...";
+
+   const response = await axios.get("/favourites");
+   
+   if (response.data.length === 0) {
+     infoDump.innerHTML = "You don't have any favorites yet!";
+     return;
+   }
+
+   infoDump.innerHTML = "<h3>Your Favorite Cats</h3>";
+   
+   // Show each favorite
+   response.data.forEach(fav => {
+     if (fav.image) {
+       const carouselItem = Carousel.createCarouselItem(
+         fav.image.url, 
+         "Favorite cat", 
+         fav.image_id
+       );
+       Carousel.appendCarousel(carouselItem);
+     }
+   });
+
+   Carousel.start();
+ } catch (error) {
+   console.error("Error loading favorites:", error);
+   infoDump.innerHTML = "Failed to load favorites.";
+ }
+}
+
 /**
  * 10. Test your site, thoroughly!
  * - What happens when you try to load the Malayan breed?
