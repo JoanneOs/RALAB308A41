@@ -206,6 +206,23 @@ error => {
  */
 export async function favourite(imgId) {
   // your code here
+  try {
+    // Check if already favorited
+    const favs = await axios.get("/favourites");
+    const existingFav = favs.data.find(fav => fav.image_id === imgId);
+
+    if (existingFav) {
+      // Remove from favorites
+      await axios.delete(`/favourites/${existingFav.id}`);
+      console.log("Removed from favorites");
+    } else {
+      // Add to favorites
+      await axios.post("/favourites", { image_id: imgId });
+      console.log("Added to favorites");
+    }
+  } catch (error) {
+    console.error("Error with favorites:", error);
+  }
 }
 
 /**
