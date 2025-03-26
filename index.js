@@ -49,8 +49,10 @@ axios.defaults.baseURL = "https://api.thecatapi.com/v1";
 async function initialLoad()
 {try{
     //get all cat breed from API
-    const response=await.axios.get("/breeds");
-    const breeds=response.data;
+   // const response=await.axios.get("/breeds");
+   const response = await axios.get("/breeds");
+ 
+   const breeds=response.data;
 
     //add eachh breed to drop down
     breeds.array.forEach(breed => {
@@ -280,3 +282,5 @@ getFavouritesBtn.addEventListener("click", getFavourites);
 
 // Start the app
 initialLoad();
+
+
