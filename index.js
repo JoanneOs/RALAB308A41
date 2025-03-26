@@ -136,6 +136,16 @@ breedSelect.addEventListener("change", (e) => {
  *   by setting a default header with your API key so that you do not have to
  *   send it manually with all of your requests! You can also set a default base URL!
  */
+
+axios.interceptors.request.use(config => {
+    console.log("Starting request to:", config.url);
+    progressBar.style.width = "0%"; // Reset progress bar
+    document.body.style.cursor = "progress"; // Show loading cursor
+    config.metadata = { startTime: new Date().getTime() }; // Track start time
+    return config;
+  });
+
+  
 /**
  * 5. Add axios interceptors to log the time between request and response to the console.
  * - Hint: you already have access to code that does this!
