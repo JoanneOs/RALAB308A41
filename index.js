@@ -145,14 +145,24 @@ axios.interceptors.request.use(config => {
     return config;
   });
 
-  
+
 /**
  * 5. Add axios interceptors to log the time between request and response to the console.
  * - Hint: you already have access to code that does this!
  * - Add a console.log statement to indicate when requests begin.
  * - As an added challenge, try to do this on your own without referencing the lesson material.
  */
-
+axios.interceptors.response.use(
+  response => {
+    // Calculate request duration
+    const duration = new Date().getTime() - response.config.metadata.startTime;
+    console.log(`Request took ${duration}ms`);
+    
+    // Update UI
+    progressBar.style.width = "100%";
+    document.body.style.cursor = "default";
+    return response;
+  },
 /**
  * 6. Next, we'll create a progress bar to indicate the request is in progress.
  * - The progressBar element has already been created for you.
