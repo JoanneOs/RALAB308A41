@@ -60,6 +60,16 @@ async function initialLoad()
         breedSelect.appendChild(option);
         
     });
+
+    //load first breed auto
+    if(breeds.length>0){
+        loadBreedImages(breeds[0].id);
+
+    }
+}catch(error){
+    console.error("Error loading breeds: ", error);
+    infoDump.innerHTML="Faild to load bread. try again";
+    
 }
     
 }
