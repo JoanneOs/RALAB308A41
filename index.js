@@ -120,6 +120,12 @@ async function loadBreedImages(breedId) {
 
 
   //////////
+
+  // When user selects a breed
+breedSelect.addEventListener("change", (e) => {
+    loadBreedImages(e.target.value);
+  });
+  
 /**
  * 
  * 4. Change all of your fetch() functions to axios!
