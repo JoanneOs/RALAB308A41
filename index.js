@@ -44,7 +44,21 @@ axios.defaults.baseURL = "https://api.thecatapi.com/v1";
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
  */
+
+//to populate breed drop down
+async function initialLoad()
+{try{
+    //get all cat breed from API
+    const response=await.axios.get("/breeds");
+    const breeds=response.data;
+
+    
+}
+    
+}
+
 /**
+ * 
  * 4. Change all of your fetch() functions to axios!
  * - axios has already been imported for you within index.js.
  * - If you've done everything correctly up to this point, this should be simple.
