@@ -52,7 +52,14 @@ async function initialLoad()
     const response=await.axios.get("/breeds");
     const breeds=response.data;
 
-    
+    //add eachh breed to drop down
+    breeds.array.forEach(breed => {
+        const option=document.createElement("option");
+        option.value=breed.id;
+        option.textContent=breed.name;
+        breedSelect.appendChild(option);
+        
+    });
 }
     
 }
