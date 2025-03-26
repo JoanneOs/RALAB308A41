@@ -69,11 +69,57 @@ async function initialLoad()
 }catch(error){
     console.error("Error loading breeds: ", error);
     infoDump.innerHTML="Faild to load bread. try again";
-    
+
 }
     
 }
 
+
+//////////
+
+
+/**
+ * 2. Load images and info for selected breed
+ */
+async function loadBreedImages(breedId) {
+    try {
+      // Clear previous content
+      Carousel.clear();
+      infoDump.innerHTML = "Loading...";
+  
+      // Get breed info and images at same time
+      const [imagesResponse, breedInfoResponse] = await Promise.all([
+        axios.get(`/images/search?breed_ids=${breedId}&limit=5`),
+        axios.get(`/breeds/${breedId}`)
+      ]);
+  
+      // Show breed information
+      const breed = breedInfoResponse.data;
+      infoDump.innerHTML = `
+        <h3>${breed.name}</h3>
+        <p>${breed.description || 'No description available'}</p>
+        <p><strong>Temperament:</strong> ${breed.temperament || 'Unknown'}</p>
+      `;
+  
+      // Add images to carousel
+      if (imagesResponse.data.length === 0) {
+        infoDump.innerHTML += "<p>No images found for this breed.</p>";
+      } else {
+        imagesResponse.data.forEach(img => {
+          const carouselItem = Carousel.createCarouselItem(img.url, breed.name, img.id);
+          Carousel.appendCarousel(carouselItem);
+        });
+        Carousel.start();
+      }
+    } catch (error) {
+      console.error("Error loading breed:", error);
+      infoDump.innerHTML = "Couldn't load this breed. Try another one!";
+    }
+  }
+
+
+
+  //////////
 /**
  * 
  * 4. Change all of your fetch() functions to axios!
