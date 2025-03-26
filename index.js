@@ -184,6 +184,15 @@ axios.interceptors.response.use(
  * - In your request interceptor, set the body element's cursor style to "progress."
  * - In your response interceptor, remove the progress cursor style from the body element.
  */
+
+error => {
+    // Reset UI on error
+    document.body.style.cursor = "default";
+    progressBar.style.width = "0%";
+    return Promise.reject(error);
+  }
+);
+
 /**
  * 8. To practice posting data, we'll create a system to "favourite" certain images.
  * - The skeleton of this function has already been created for you.
