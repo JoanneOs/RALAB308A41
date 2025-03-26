@@ -11,7 +11,11 @@ const progressBar = document.getElementById("progressBar");
 const getFavouritesBtn = document.getElementById("getFavouritesBtn");
 
 // Step 0: Store your API key here for reference and easy access.
-const API_KEY = "";
+// API key setup
+const API_KEY = "live_t0Ip5XQYOoYPFhnoVeFgYBI3VWbPD8w9qXL1beTVFCQPFeCKkrJ6i4I7AQkBZttx";
+axios.defaults.headers.common["x-api-key"] = API_KEY;
+axios.defaults.baseURL = "https://api.thecatapi.com/v1";
+
 
 /**
  * 1. Create an async function "initialLoad" that does the following:
