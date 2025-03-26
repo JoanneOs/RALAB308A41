@@ -275,3 +275,8 @@ async function getFavourites() {
  * - Test other breeds as well. Not every breed has the same data available, so
  *   your code should account for this.
  */
+// Click handler for favorites button
+getFavouritesBtn.addEventListener("click", getFavourites);
+
+// Start the app
+initialLoad();
