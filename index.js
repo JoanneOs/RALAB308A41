@@ -187,6 +187,8 @@ function updateProgress(progressEvent) {
   }
 }
 
+
+
 error => {
     // Reset UI on error
     document.body.style.cursor = "default";
@@ -238,36 +240,42 @@ export async function favourite(imgId) {
  */
 
 async function getFavourites() {
- try {
-   Carousel.clear();
-   infoDump.innerHTML = "Loading favorites...";
+  try {
+    Carousel.clear();
+    infoDump.innerHTML = "Loading favorites...";
 
-   const response = await axios.get("/favourites");
-   
-   if (response.data.length === 0) {
-     infoDump.innerHTML = "You don't have any favorites yet!";
-     return;
-   }
+    const response = await axios.get("/favourites");
+    const favs = response.data;
 
-   infoDump.innerHTML = "<h3>Your Favorite Cats</h3>";
-   
-   // Show each favorite
-   response.data.forEach(fav => {
-     if (fav.image) {
-       const carouselItem = Carousel.createCarouselItem(
-         fav.image.url, 
-         "Favorite cat", 
-         fav.image_id
-       );
-       Carousel.appendCarousel(carouselItem);
-     }
-   });
+    if (favs.length === 0) {
+      infoDump.innerHTML = "You don't have any favorites yet!";
+      return;
+    }
 
-   Carousel.start();
- } catch (error) {
-   console.error("Error loading favorites:", error);
-   infoDump.innerHTML = "Failed to load favorites.";
- }
+    infoDump.innerHTML = "<h3>Your Favorite Cats</h3>";
+    
+    // Get image details for each favorite
+    const imageRequests = favs.map(fav => 
+      axios.get(`/images/${fav.image_id}`)
+    );
+    
+    const images = await Promise.all(imageRequests);
+    
+    images.forEach(imgResponse => {
+      const img = imgResponse.data;
+      const carouselItem = Carousel.createCarouselItem(
+        img.url, 
+        "Favorite cat", 
+        img.id
+      );
+      Carousel.appendCarousel(carouselItem);
+    });
+
+    Carousel.start();
+  } catch (error) {
+    console.error("Error loading favorites:", error);
+    infoDump.innerHTML = "Failed to load favorites.";
+  }
 }
 
 /**

@@ -115,3 +115,10 @@ export function start() {
 }
 
 //testing
+
+//exporting form today's lesson: 
+export function start() {
+    const carousel = new bootstrap.Carousel('#carouselExampleControls', {
+      interval: false
+    });
+  }
