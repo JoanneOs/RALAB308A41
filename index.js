@@ -46,34 +46,25 @@ axios.defaults.baseURL = "https://api.thecatapi.com/v1";
  */
 
 //to populate breed drop down
-async function initialLoad()
-{try{
-    //get all cat breed from API
-   // const response=await.axios.get("/breeds");
-   const response = await axios.get("/breeds");
- 
-   const breeds=response.data;
+async function initialLoad() {
+  try {
+    const response = await axios.get("/breeds");
+    const breeds = response.data;
 
-    //add eachh breed to drop down
-    breeds.array.forEach(breed => {
-        const option=document.createElement("option");
-        option.value=breed.id;
-        option.textContent=breed.name;
-        breedSelect.appendChild(option);
-        
+    breeds.forEach(breed => {
+      const option = document.createElement("option");
+      option.value = breed.id;
+      option.textContent = breed.name;
+      breedSelect.appendChild(option);
     });
 
-    //load first breed auto
-    if(breeds.length>0){
-        loadBreedImages(breeds[0].id);
-
+    if (breeds.length > 0) {
+      loadBreedImages(breeds[0].id);
     }
-}catch(error){
+  } catch (error) {
     console.error("Error loading breeds: ", error);
-    infoDump.innerHTML="Faild to load bread. try again";
-
-}
-    
+    infoDump.innerHTML = "Failed to load breeds. Please try again.";
+  }
 }
 
 
@@ -186,6 +177,15 @@ axios.interceptors.response.use(
  * - In your request interceptor, set the body element's cursor style to "progress."
  * - In your response interceptor, remove the progress cursor style from the body element.
  */
+
+//update progress
+
+function updateProgress(progressEvent) {
+  if (progressEvent.lengthComputable) {
+    const percentComplete = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+    progressBar.style.width = `${percentComplete}%`;
+  }
+}
 
 error => {
     // Reset UI on error
