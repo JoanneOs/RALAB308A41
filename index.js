@@ -229,66 +229,66 @@ export async function favourite(imgId) {
   }
 }
 
-/**
- * 9. Test your favourite() function by creating a getFavourites() function.
- * - Use Axios to get all of your favourites from the cat API.
- * - Clear the carousel and display your favourites when the button is clicked.
- *  - You will have to bind this event listener to getFavouritesBtn yourself.
- *  - Hint: you already have all of the logic built for building a carousel.
- *    If that isn't in its own function, maybe it should be so you don't have to
- *    repeat yourself in this section.
- */
+// /**
+//  * 9. Test your favourite() function by creating a getFavourites() function.
+//  * - Use Axios to get all of your favourites from the cat API.
+//  * - Clear the carousel and display your favourites when the button is clicked.
+//  *  - You will have to bind this event listener to getFavouritesBtn yourself.
+//  *  - Hint: you already have all of the logic built for building a carousel.
+//  *    If that isn't in its own function, maybe it should be so you don't have to
+//  *    repeat yourself in this section.
+//  */
 
-async function getFavourites() {
-  try {
-    Carousel.clear();
-    infoDump.innerHTML = "Loading favorites...";
+// async function getFavourites() {
+//   try {
+//     Carousel.clear();
+//     infoDump.innerHTML = "Loading favorites...";
 
-    const response = await axios.get("/favourites");
-    const favs = response.data;
+//     const response = await axios.get("/favourites");
+//     const favs = response.data;
 
-    if (favs.length === 0) {
-      infoDump.innerHTML = "You don't have any favorites yet!";
-      return;
-    }
+//     if (favs.length === 0) {
+//       infoDump.innerHTML = "You don't have any favorites yet!";
+//       return;
+//     }
 
-    infoDump.innerHTML = "<h3>Your Favorite Cats</h3>";
+//     infoDump.innerHTML = "<h3>Your Favorite Cats</h3>";
     
-    // Get image details for each favorite
-    const imageRequests = favs.map(fav => 
-      axios.get(`/images/${fav.image_id}`)
-    );
+//     // Get image details for each favorite
+//     const imageRequests = favs.map(fav => 
+//       axios.get(`/images/${fav.image_id}`)
+//     );
     
-    const images = await Promise.all(imageRequests);
+//     const images = await Promise.all(imageRequests);
     
-    images.forEach(imgResponse => {
-      const img = imgResponse.data;
-      const carouselItem = Carousel.createCarouselItem(
-        img.url, 
-        "Favorite cat", 
-        img.id
-      );
-      Carousel.appendCarousel(carouselItem);
-    });
+//     images.forEach(imgResponse => {
+//       const img = imgResponse.data;
+//       const carouselItem = Carousel.createCarouselItem(
+//         img.url, 
+//         "Favorite cat", 
+//         img.id
+//       );
+//       Carousel.appendCarousel(carouselItem);
+//     });
 
-    Carousel.start();
-  } catch (error) {
-    console.error("Error loading favorites:", error);
-    infoDump.innerHTML = "Failed to load favorites.";
-  }
-}
+//     Carousel.start();
+//   } catch (error) {
+//     console.error("Error loading favorites:", error);
+//     infoDump.innerHTML = "Failed to load favorites.";
+//   }
+// }
 
-/**
- * 10. Test your site, thoroughly!
- * - What happens when you try to load the Malayan breed?
- *  - If this is working, good job! If not, look for the reason why and fix it!
- * - Test other breeds as well. Not every breed has the same data available, so
- *   your code should account for this.
- */
-// Click handler for favorites button
-getFavouritesBtn.addEventListener("click", getFavourites);
+// /**
+//  * 10. Test your site, thoroughly!
+//  * - What happens when you try to load the Malayan breed?
+//  *  - If this is working, good job! If not, look for the reason why and fix it!
+//  * - Test other breeds as well. Not every breed has the same data available, so
+//  *   your code should account for this.
+//  */
+// // Click handler for favorites button
+// getFavouritesBtn.addEventListener("click", getFavourites);
 
-// Start the app
-initialLoad();
+// // Start the app
+// initialLoad();
 
 
